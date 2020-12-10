@@ -16,16 +16,8 @@ class FeedsController < ApplicationController
     end
   end
 
-  def confirm
-    @feed = Feed.new(feed_params)
-  end
-
-  def edit
-  end
-
   def create
-    @feed = Feed.new(feed_params)
-
+    @feed = current_user.feeds.build(feed_params)
     respond_to do |format|
       if @feed.save
         format.html { redirect_to @feed, notice: 'Feed was successfully created.' }
@@ -35,6 +27,14 @@ class FeedsController < ApplicationController
         format.json { render json: @feed.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def confirm
+    @feed = current_user.feeds.build(feed_params)
+    render :new if @feed.invalid?
+  end
+
+  def edit
   end
 
   def update
@@ -63,6 +63,6 @@ class FeedsController < ApplicationController
     end
 
     def feed_params
-      params.require(:feed).permit(:image, :image_cache, :title, :content)
+      params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id)
     end
 end

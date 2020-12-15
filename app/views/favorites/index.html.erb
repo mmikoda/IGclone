@@ -1,0 +1,24 @@
+<h1>お気に入り</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>user</th>
+      <th>title</th>
+      <th>content</th>
+      <th>image</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @favorites.each do |favorite| %>
+      <tr>
+        <td><%= favorite.feed.user.name %></td>
+        <td><%= favorite.feed.title %></td>
+        <td><%= favorite.feed.content %></td>
+        <td><%= image_tag favorite.feed.image.url %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

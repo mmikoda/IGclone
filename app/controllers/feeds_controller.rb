@@ -1,5 +1,7 @@
 class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
+  before_action:logged_in?, only:[:new,:create]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @feeds = Feed.all
@@ -59,11 +61,18 @@ class FeedsController < ApplicationController
   end
 
   private
-    def set_feed
-      @feed = Feed.find(params[:id])
-    end
+  def set_feed
+    @feed = Feed.find(params[:id])
+  end
 
-    def feed_params
-      params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id)
+  def correct_user
+    if current_user.id != @feed.user_id
+      flash[:notice] = "権限がないです"
+      redirect_to feeds_path
     end
+  end
+
+  def feed_params
+    params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id)
+  end
 end

@@ -21,6 +21,8 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener_web'
+  gem 'dotenv-rails'
 end
 
 group :test do
@@ -34,7 +36,3 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 gem 'bcrypt', '3.1.11'
-
-group :development do
-  gem 'letter_opener_web'
-end

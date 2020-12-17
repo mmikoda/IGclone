@@ -25,6 +25,7 @@ class FeedsController < ApplicationController
       if @feed.save
         format.html { redirect_to @feed, notice: 'Feed was successfully created.' }
         format.json { render :show, status: :created, location: @feed }
+        FeedMailer.feed_mail(@feed).deliver
       else
         format.html { render :new }
         format.json { render json: @feed.errors, status: :unprocessable_entity }
@@ -73,6 +74,6 @@ class FeedsController < ApplicationController
   end
 
   def feed_params
-    params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id)
+    params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id, :email)
   end
 end

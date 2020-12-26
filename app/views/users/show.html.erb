@@ -1,12 +1,17 @@
-<h1><%= @user.name %>のページ</h1>
-<p>メールアドレス: <%= @user.email %></p>
+<% if logged_in? %>
+  <h1><%= @user.name %>のページ</h1>
+  <p>メールアドレス: <%= @user.email %></p>
 
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @user.photo.url %>
-</p>
+  <p id="notice"><%= notice %></p>
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag @user.photo.url %>
+  </p>
 
-<%= link_to 'お気に入り一覧', favorites_path %> |
+  <%= link_to 'お気に入り一覧', favorites_path %> |
+  <%= link_to 'プロフィールを編集', edit_user_path(@user) %>
 
-<%= link_to 'プロフィールを編集', edit_user_path(@user) %>
+<% else %>
+  <h1>ユーザー：<%= @user.name %>を登録しました。</h1>
+  <h3><%= link_to "ログイン", new_session_path %>してください</h3>
+<% end %>

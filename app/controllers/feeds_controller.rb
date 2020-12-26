@@ -20,6 +20,7 @@ class FeedsController < ApplicationController
   end
 
   def edit
+    @feed = Feed.find(params[:id])
   end
   
   def create
@@ -67,6 +68,10 @@ class FeedsController < ApplicationController
   end
 
   private
+  def feed_params
+    params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id, :feed_id, :email)
+  end
+
   def set_feed
     @feed = Feed.find(params[:id])
   end
@@ -76,9 +81,5 @@ class FeedsController < ApplicationController
       flash[:notice] = "権限がないです"
       redirect_to feeds_path
     end
-  end
-
-  def feed_params
-    params.require(:feed).permit(:image, :image_cache, :title, :content, :user_id, :email)
   end
 end

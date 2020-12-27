@@ -4,7 +4,7 @@ Rails.application.configure do
   config.consider_all_requests_local = false
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
-    config.action_controller.perform_caching = true
+    config.action_controller.perform_caching = false
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {

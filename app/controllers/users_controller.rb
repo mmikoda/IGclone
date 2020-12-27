@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action:logged_in?, only:[:new,:create]
   before_action :own_user, only: [:edit, :update, :destroy]
   
   def new
@@ -33,11 +35,15 @@ class UsersController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password,:password_confirmation,:photo, :photo_cache)
+    params.require(:user).permit(:id, :name, :email, :password,:password_confirmation,:photo, :photo_cache)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
   def own_user
-    if current_user.id != @user.user_id
+    if current_user.id != @user.id
       redirect_to user_path
     end
   end
